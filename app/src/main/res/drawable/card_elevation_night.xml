@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shadow -->
+    <item>
+        <shape>
+            <padding
+                android:bottom="2dp"
+                android:left="2dp"
+                android:right="2dp"
+                android:top="2dp" />
+            <solid android:color="#40000000" />
+            <corners android:radius="24dp" />
+        </shape>
+    </item>
+    
+    <!-- Card Background -->
+    <item>
+        <shape>
+            <solid android:color="@color/background_card_night" />
+            <corners android:radius="24dp" />
+        </shape>
+    </item>
+</layer-list>
+

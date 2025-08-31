@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">iliDownloader</string>
+    <string name="app_description">Beautiful Instagram Content Downloader</string>
+    
+    <!-- Main Screen -->
+    <string name="app_title">iliDownloader</string>
+    <string name="app_subtitle">Download Instagram Content</string>
+    <string name="input_label">Enter Instagram Username or Post Link</string>
+    <string name="input_hint">Username or Instagram URL</string>
+    <string name="download_button">Download!</string>
+    
+    <!-- Progress Section -->
+    <string name="progress_label">Download Progress</string>
+    <string name="progress_ready">Ready to download</string>
+    <string name="progress_initializing">Initializing download...</string>
+    <string name="progress_downloading">Downloading content...</string>
+    <string name="progress_processing">Processing media files...</string>
+    <string name="progress_finalizing">Finalizing download...</string>
+    <string name="progress_completed">Download completed!</string>
+    
+    <!-- Info Cards -->
+    <string name="download_locations_title">Download Locations</string>
+    <string name="download_locations_desc">Profiles: InstaLoaderApp/username\nPosts: InstaLoaderApp/posts</string>
+    <string name="account_type_title">Account Type</string>
+    <string name="account_type_desc">Only Public Accounts</string>
+    
+    <!-- Footer -->
+    <string name="app_version">iliDownloader V1.0</string>
+    <string name="app_author">By github.com/iliaxp</string>
+    
+    <!-- Toast Messages -->
+    <string name="toast_download_started">Download Started</string>
+    <string name="toast_download_finished">Download Finished</string>
+    <string name="toast_download_failed">Download failed</string>
+    <string name="toast_empty_field">Please enter a username or Instagram URL</string>
+    <string name="toast_something_wrong">Something went wrong</string>
+    
+    <!-- Status Messages -->
+    <string name="status_found_posts">Found %1$d posts, Downloading...</string>
+    <string name="status_download_completed">Download completed successfully!</string>
+    <string name="status_error">Error: %1$s</string>
+</resources>

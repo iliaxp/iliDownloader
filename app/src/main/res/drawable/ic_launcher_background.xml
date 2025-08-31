@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Gradient Background -->
+    <path
+        android:fillColor="@color/gradient_start"
+        android:pathData="M0,0h108v108h-108z" />
+    
+    <!-- Gradient Overlay -->
+    <path
+        android:fillColor="@color/gradient_end"
+        android:pathData="M0,0h108v108h-108z"
+        android:alpha="0.7" />
+    
+    <!-- Decorative Elements -->
+    <path
+        android:fillColor="@color/primary"
+        android:pathData="M20,20m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0"
+        android:alpha="0.3" />
+    
+    <path
+        android:fillColor="@color/secondary"
+        android:pathData="M80,30m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"
+        android:alpha="0.3" />
+    
+    <path
+        android:fillColor="@color/tertiary"
+        android:pathData="M90,80m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0"
+        android:alpha="0.3" />
+</vector>

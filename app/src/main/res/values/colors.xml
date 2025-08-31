@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material Design 3 Color System -->
+    <color name="primary">#FF6B9D</color>
+    <color name="primary_dark">#E55A8A</color>
+    <color name="primary_light">#FF8FB8</color>
+    <color name="primary_container">#FFE1EC</color>
+    
+    <color name="secondary">#FFD93D</color>
+    <color name="secondary_dark">#F4C20D</color>
+    <color name="secondary_light">#FFE082</color>
+    <color name="secondary_container">#FFF8E1</color>
+    
+    <color name="tertiary">#6C63FF</color>
+    <color name="tertiary_dark">#5A52D9</color>
+    <color name="tertiary_light">#8B85FF</color>
+    <color name="tertiary_container">#E8E6FF</color>
+    
+    <!-- Instagram-inspired Colors -->
+    <color name="insta_pink">#E4405F</color>
+    <color name="insta_purple">#833AB4</color>
+    <color name="insta_orange">#FD1D1D</color>
+    <color name="insta_yellow">#FCAF45</color>
+    <color name="insta_red">#D81B60</color>
+    
+    <!-- Surface Colors -->
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F8F9FA</color>
+    <color name="surface_container">#F0F2F5</color>
+    <color name="surface_container_high">#E8EAED</color>
+    <color name="surface_container_low">#FAFBFC</color>
+    
+    <!-- Night Mode Surface Colors -->
+    <color name="surface_night">#1A1C1E</color>
+    <color name="surface_variant_night">#2A2D2F</color>
+    <color name="surface_container_night">#2F3133</color>
+    <color name="surface_container_high_night">#3A3C3E</color>
+    <color name="surface_container_low_night">#252729</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#FFFFFF</color>
+    <color name="background_night">#1A1C1E</color>
+    
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#FF6B9D</color>
+    <color name="gradient_center">#FF8FB8</color>
+    <color name="gradient_end">#6C63FF</color>
+    <color name="gradient_start_night">#2A2D2F</color>
+    <color name="gradient_end_night">#1A1C1E</color>
+    
+    <!-- Text Colors -->
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_secondary">#1C1B1F</color>
+    <color name="on_tertiary">#FFFFFF</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="on_surface_variant">#49454F</color>
+    <color name="on_background">#1C1B1F</color>
+    
+    <!-- Night Mode Text Colors -->
+    <color name="on_surface_night">#E6E1E5</color>
+    <color name="on_surface_variant_night">#CAC4D0</color>
+    <color name="on_background_night">#E6E1E5</color>
+    
+    <!-- Status Colors -->
+    <color name="success">#4CAF50</color>
+    <color name="success_container">#E8F5E8</color>
+    <color name="error">#F44336</color>
+    <color name="error_container">#FFEBEE</color>
+    <color name="warning">#FF9800</color>
+    <color name="warning_container">#FFF3E0</color>
+    <color name="info">#2196F3</color>
+    <color name="info_container">#E3F2FD</color>
+    
+    <!-- Legacy Colors (keeping for compatibility) -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Additional Modern Colors -->
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#CAC4D0</color>
+    <color name="shadow">#000000</color>
+    <color name="scrim">#000000</color>
+    <color name="inverse_surface">#313033</color>
+    <color name="inverse_on_surface">#F4EFF4</color>
+    <color name="inverse_primary">#FFB3D9</color>
+    
+    <!-- Legacy color references for compatibility -->
+    <color name="text_white">#FFFFFF</color>
+    <color name="background_card">#FFFFFF</color>
+    <color name="background_card_night">#2D2D2D</color>
+    <color name="text_primary">#1C1B1F</color>
+    <color name="text_secondary">#49454F</color>
+    <color name="text_hint">#BDBDBD</color>
+    <color name="background_primary">#FFFFFF</color>
+    <color name="background_secondary">#F8F9FA</color>
+    <color name="background_primary_night">#1A1C1E</color>
+    <color name="background_secondary_night">#2A2D2F</color>
+    <color name="accent">#6C63FF</color>
+    <color name="accent_dark">#5A52D9</color>
+    <color name="accent_light">#8B85FF</color>
+</resources>
