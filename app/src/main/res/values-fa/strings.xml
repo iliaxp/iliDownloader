@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ایلی دانلودر</string>
+    <string name="app_description">دانلودر زیبای محتوای اینستاگرام</string>
+    
+    <!-- Main Screen -->
+    <string name="app_title">ایلی دانلودر</string>
+    <string name="app_subtitle">دانلود محتوای اینستاگرام</string>
+    <string name="input_label">نام کاربری اینستاگرام یا لینک پست را وارد کنید</string>
+    <string name="input_hint">نام کاربری یا لینک اینستاگرام</string>
+    <string name="download_button">دانلود محتوا</string>
+    
+    <!-- Progress Section -->
+    <string name="progress_label">پیشرفت دانلود</string>
+    <string name="progress_ready">آماده برای دانلود</string>
+    <string name="progress_initializing">در حال آماده‌سازی دانلود...</string>
+    <string name="progress_downloading">در حال دانلود محتوا...</string>
+    <string name="progress_processing">در حال پردازش فایل‌های رسانه...</string>
+    <string name="progress_finalizing">در حال نهایی‌سازی دانلود...</string>
+    <string name="progress_completed">دانلود تکمیل شد!</string>
+    
+    <!-- Info Cards -->
+    <string name="download_locations_title">محل‌های دانلود</string>
+    <string name="download_locations_desc">پروفایل‌ها: InstaLoaderApp/username\nپست‌ها: InstaLoaderApp/posts</string>
+    <string name="account_type_title">نوع حساب</string>
+    <string name="account_type_desc">فقط حساب‌های عمومی</string>
+    
+    <!-- Footer -->
+    <string name="app_version">iliDownload V1.0.0</string>
+    <string name="app_author">توسط github.com/iliaxp</string>
+    
+    <!-- Toast Messages -->
+    <string name="toast_download_started">دانلود شروع شد</string>
+    <string name="toast_download_finished">دانلود تمام شد</string>
+    <string name="toast_download_failed">دانلود ناموفق بود</string>
+    <string name="toast_empty_field">لطفاً نام کاربری یا لینک اینستاگرام را وارد کنید</string>
+    <string name="toast_something_wrong">مشکلی پیش آمد</string>
+    <string name="toast_clipboard_pasted">محتوا از کلیپ برد پیست شد</string>
+    <string name="notification_preparing">آماده سازی دانلود</string>
+    <string name="notification_connecting">درحال اتصال</string>
+    <string name="notification_downloading_post">درحال دانلود محتوا</string>
+    <string name="notification_downloading_profile">درحال دانلود پروفایل</string>
+    <string name="notification_completed">دانلود به اتمام رسید😁</string>
+    <string name="notification_failed">دانلود ناموفق بود☹️❌</string>
+    
+    <!-- Status Messages -->
+    <string name="status_found_posts">%1$d پست پیدا شد، در حال دانلود...</string>
+    <string name="status_download_completed">دانلود با موفقیت تکمیل شد!</string>
+    <string name="status_error">خطا: %1$s</string>
+    <string name="status_no_posts">هیچ پستی پیدا نشد یا حساب خصوصی است</string>
+</resources>
+

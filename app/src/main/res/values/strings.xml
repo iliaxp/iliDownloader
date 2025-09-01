@@ -25,7 +25,7 @@
     <string name="account_type_desc">Only Public Accounts</string>
     
     <!-- Footer -->
-    <string name="app_version">iliDownloader V1.0</string>
+    <string name="app_version">iliDownloader V1.0.0</string>
     <string name="app_author">By github.com/iliaxp</string>
     
     <!-- Toast Messages -->
@@ -34,9 +34,17 @@
     <string name="toast_download_failed">Download failed</string>
     <string name="toast_empty_field">Please enter a username or Instagram URL</string>
     <string name="toast_something_wrong">Something went wrong</string>
+    <string name="toast_clipboard_pasted">Content pasted from clipboard</string>
+    <string name="notification_preparing">Preparing download…</string>
+    <string name="notification_connecting">Connecting…</string>
+    <string name="notification_downloading_post">Downloading post…</string>
+    <string name="notification_downloading_profile">Downloading profile…</string>
+    <string name="notification_completed">Download completed</string>
+    <string name="notification_failed">Download failed</string>
     
     <!-- Status Messages -->
     <string name="status_found_posts">Found %1$d posts, Downloading...</string>
     <string name="status_download_completed">Download completed successfully!</string>
     <string name="status_error">Error: %1$s</string>
+    <string name="status_no_posts">No posts found or account is private</string>
 </resources>

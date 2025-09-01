@@ -3,6 +3,12 @@ package com.alphacorp.instaloader
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -19,6 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.chaquo.python.Python
+import com.chaquo.python.PyObject
 import com.chaquo.python.android.AndroidPlatform
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -26,8 +33,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
-// Removed invalid shake property declaration
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     
@@ -38,11 +44,46 @@ class MainActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var progressText: TextView
     private lateinit var mainCard: View
+    private lateinit var sharedPreferences: SharedPreferences
+    
+    private var isDownloading = false
+    private var currentProgress = 0
+    private var totalProgress = 100
+    private var progressReceiverRegistered = false
+    private val progressReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == DownloadService.ACTION_PROGRESS) {
+                val current = intent.getIntExtra(DownloadService.EXTRA_CURRENT, 0)
+                val total = intent.getIntExtra(DownloadService.EXTRA_TOTAL, 100)
+                val status = intent.getStringExtra(DownloadService.EXTRA_STATUS) ?: ""
+                val done = intent.getBooleanExtra(DownloadService.EXTRA_DONE, false)
+                val failed = intent.getBooleanExtra(DownloadService.EXTRA_FAILED, false)
+                runOnUiThread {
+                    if (!progressSection.isShown) showProgressSection()
+                    updateProgress(current, if (total == 0) 100 else total)
+                    if (status.isNotBlank()) updateStatus(status)
+                    if (done) {
+                        if (failed) {
+                            showToast(getString(R.string.toast_download_failed))
+                        } else {
+                            showToast(getString(R.string.toast_download_finished))
+                        }
+                        hideProgressSection()
+                    }
+                }
+            }
+        }
+    }
     
     @SuppressLint("MissingInflatedId")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Initialize SharedPreferences and restore language
+        sharedPreferences = getSharedPreferences("InstaLoaderPrefs", MODE_PRIVATE)
+        restoreLanguage()
+        
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
         
@@ -51,6 +92,24 @@ class MainActivity : AppCompatActivity() {
         setupPython()
         setupAnimations()
         setupClickListeners()
+        registerProgressReceiver()
+    }
+    
+    private fun restoreLanguage() {
+        val selectedLanguage = sharedPreferences.getString("selected_language", "en")
+        if (selectedLanguage != null) {
+            setLocale(selectedLanguage)
+        }
+    }
+    
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        
+        val config = resources.configuration
+        config.setLocale(locale)
+        createConfigurationContext(config)
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
     
     private fun initializeViews() {
@@ -107,8 +166,20 @@ class MainActivity : AppCompatActivity() {
     
     private fun setupClickListeners() {
         downloadButton.setOnClickListener {
-            if (inputBox.text.toString().isNotEmpty()) {
-                startDownload()
+            var input = inputBox.text?.toString() ?: ""
+            if (input.isBlank()) {
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip: ClipData? = clipboard.primaryClip
+                val text: CharSequence? = clip?.getItemAt(0)?.coerceToText(this)
+                if (!text.isNullOrBlank()) {
+                    inputBox.setText(text)
+                    input = text.toString()
+                    showToast(getString(R.string.toast_clipboard_pasted))
+                }
+            }
+            if (input.isNotBlank()) {
+                enqueueBackgroundDownload(input)
+                inputBox.text?.clear()
             } else {
                 showToast(getString(R.string.toast_empty_field))
                 shakeInput()
@@ -118,22 +189,53 @@ class MainActivity : AppCompatActivity() {
     
     private fun startDownload() {
         val input = inputBox.text.toString()
+        isDownloading = true
+        currentProgress = 0
+        totalProgress = 100
         showToast(getString(R.string.toast_download_started))
-        
-        // Show progress section with animation
         showProgressSection()
-        
+        updateProgress(10, 100)
+        updateStatus(getString(R.string.progress_initializing))
         if (input.startsWith("https://www.instagram.com/")) {
             downloadFromLink(input)
         } else {
             downloadFromUsername(input)
         }
     }
+
+    private fun enqueueBackgroundDownload(input: String) {
+        val intent = Intent(this, DownloadService::class.java).apply {
+            action = DownloadService.ACTION_START_DOWNLOAD
+            putExtra(DownloadService.EXTRA_INPUT, input)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
+    }
+
+    private fun registerProgressReceiver() {
+        if (!progressReceiverRegistered) {
+            val filter = IntentFilter(DownloadService.ACTION_PROGRESS)
+            registerReceiver(progressReceiver, filter)
+            progressReceiverRegistered = true
+        }
+    }
+
+    override fun onDestroy() {
+        if (progressReceiverRegistered) {
+            unregisterReceiver(progressReceiver)
+            progressReceiverRegistered = false
+        }
+        super.onDestroy()
+    }
     
     private fun downloadFromLink(url: String) {
         val py = Python.getInstance()
         val module = py.getModule("script")
         val linkDownloader = module["download_post_from_link"]
+        val getProgress = module["get_progress"]
         
         var postShortcode = ""
         if (url.startsWith("https://www.instagram.com/p/")) {
@@ -144,22 +246,38 @@ class MainActivity : AppCompatActivity() {
         
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Simulate progress for single post download
-                simulateProgress(100)
+                // Start progress monitoring
+                startProgressMonitoring(getProgress)
                 
+                // Execute the actual download
                 linkDownloader?.call(postShortcode)
                 
+                // Final progress update - Show "Finishing Download" and complete to 100%
+                delay(1000)
                 runOnUiThread {
-                    showToast("Download Finished")
-                    updateStatus("Download completed successfully!")
+                    updateProgress(100, 100)
+                    updateStatus(getString(R.string.progress_finalizing))
+                }
+                
+                // Small delay to show "Finishing Download" message
+                delay(1500)
+                
+                runOnUiThread {
+                    showToast(getString(R.string.toast_download_finished))
+                    updateStatus(getString(R.string.progress_completed))
                     hideProgressSection()
                     showSuccessAnimation()
+                    isDownloading = false
+                    
+                    // Clear input field for next download
+                    inputBox.text?.clear()
                 }
             } catch (error: Throwable) {
                 runOnUiThread {
-                    showToast("Download failed")
-                    updateStatus("Error: ${error.message}")
+                    showToast(getString(R.string.toast_download_failed))
+                    updateStatus(getString(R.string.status_error, error.message ?: "Unknown error"))
                     hideProgressSection()
+                    isDownloading = false
                 }
             }
         }
@@ -170,61 +288,127 @@ class MainActivity : AppCompatActivity() {
         val module = py.getModule("script")
         val downloader = module["download"]
         val posts = module["post_count"]
+        val getProgress = module["get_progress"]
         
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                // Get post count first
                 val postCount = posts?.call(username) as? Int ?: 0
                 
                 runOnUiThread {
-                    updateStatus("Found $postCount posts, Downloading...")
+                    updateStatus(getString(R.string.status_found_posts, postCount))
                 }
                 
-                // Simulate progress based on post count
-                simulateProgress(postCount * 10)
-                
-                downloader?.call(username)
+                if (postCount > 0) {
+                    totalProgress = postCount
+                    currentProgress = 0
+                    
+                    runOnUiThread {
+                        updateProgress((postCount * 0.1).toInt(), postCount) // Show 10% progress after finding posts
+                        updateStatus(getString(R.string.status_found_posts, postCount))
+                    }
+                    
+                    // Start progress monitoring with post count
+                    startProgressMonitoringWithTotal(getProgress, postCount)
+                    
+                    // Execute the download
+                    downloader?.call(username)
+                    
+                    // Final progress update - Show "Finishing Download" and complete to 100%
+                    delay(1000)
+                    runOnUiThread {
+                        updateProgress(postCount, postCount)
+                        updateStatus(getString(R.string.progress_finalizing))
+                    }
+                    
+                    // Small delay to show "Finishing Download" message
+                    delay(1500)
+                } else {
+                    runOnUiThread {
+                        updateProgress(0, 1)
+                        updateStatus(getString(R.string.status_no_posts))
+                    }
+                }
                 
                 runOnUiThread {
-                    showToast("Download Finished")
-                    updateStatus("Download completed successfully!")
+                    showToast(getString(R.string.toast_download_finished))
+                    updateStatus(getString(R.string.progress_completed))
                     hideProgressSection()
                     showSuccessAnimation()
+                    isDownloading = false
+                    
+                    // Clear input field for next download
+                    inputBox.text?.clear()
                 }
             } catch (error: Throwable) {
                 runOnUiThread {
-                    showToast("Download failed")
-                    updateStatus("Error: ${error.message}")
+                    showToast(getString(R.string.toast_download_failed))
+                    updateStatus(getString(R.string.status_error, error.message ?: "Unknown error"))
                     hideProgressSection()
+                    isDownloading = false
                 }
             }
         }
     }
     
-    private suspend fun simulateProgress(maxProgress: Int) {
-        var progress = 0
-        while (progress < maxProgress) {
-            progress += (maxProgress / 20).coerceAtLeast(1)
-            runOnUiThread {
-                updateProgress(progress, maxProgress)
-            }
-            delay(100) // Simulate download time
-        }
+    private fun startProgressMonitoring(getProgress: PyObject?) {
+        startProgressMonitoringWithTotal(getProgress, 100)
     }
     
+    private fun startProgressMonitoringWithTotal(getProgress: PyObject?, total: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            var fakeProgress = (total * 0.1).toInt() // Start from 10% of total
+            
+            // Ensure we start at 10% immediately
+            runOnUiThread {
+                updateProgress(fakeProgress, total)
+                updateStatus(getString(R.string.progress_downloading))
+            }
+            
+            while (isDownloading) {
+                try {
+                    // Use fake progress that increments by 10% steps
+                    val maxFakeProgress = (total * 0.8).toInt() // Go up to 80% of total to prevent getting stuck
+                    if (fakeProgress < maxFakeProgress) {
+                        fakeProgress += (total * 0.1).toInt() // Increment by 10% of total
+                    }
+                    
+                    runOnUiThread {
+                        updateProgress(fakeProgress, total)
+                        updateStatus(getString(R.string.progress_downloading))
+                    }
+                    
+                    delay(800) // Update every 800ms for smooth fake progress
+                } catch (e: Exception) {
+                    // Continue with fake progress even if Python call fails
+                    val maxFakeProgress = (total * 0.8).toInt()
+                    if (fakeProgress < maxFakeProgress) {
+                        fakeProgress += (total * 0.1).toInt()
+                    }
+                    
+                    runOnUiThread {
+                        updateProgress(fakeProgress, total)
+                        updateStatus(getString(R.string.progress_downloading))
+                    }
+                    delay(800)
+                }
+            }
+        }
+        }
+    
     private fun updateProgress(current: Int, max: Int) {
-        val percentage = ((current.toFloat() / max.toFloat()) * 100).toInt()
+        currentProgress = current
+        totalProgress = max
+        
+        val percentage = if (max > 0) ((current.toFloat() / max.toFloat()) * 100).toInt() else 0
         progressBar.max = max
         progressBar.progress = current
         progressText.text = "$percentage%"
         
-        // Update status text based on progress
-        when {
-            percentage < 25 -> updateStatus("Initializing download...")
-            percentage < 50 -> updateStatus("Downloading content...")
-            percentage < 75 -> updateStatus("Processing media files...")
-            percentage < 100 -> updateStatus("Finalizing download...")
-            else -> updateStatus("Download completed!")
-        }
+        // Add smooth animation for progress updates
+        progressBar.animate()
+            .setDuration(200)
+            .start()
     }
     
     private fun showProgressSection() {
@@ -234,6 +418,9 @@ class MainActivity : AppCompatActivity() {
             .alpha(1f)
             .setDuration(300)
             .start()
+        
+        // Start with initial progress
+        updateProgress(0, totalProgress)
     }
     
     private fun hideProgressSection() {

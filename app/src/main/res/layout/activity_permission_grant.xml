@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/animated_gradient_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
+
+        <!-- App Logo -->
+        <FrameLayout
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginBottom="40dp">
+
+            <!-- Glow Effect -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/logo_glow"
+                android:alpha="0.4" />
+
+            <!-- Main Logo -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon2"
+                android:contentDescription="App Icon"
+                android:padding="20dp" />
+
+        </FrameLayout>
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click on Grant"
+            android:textColor="@color/on_primary"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="دسترسی فایل هارا بدهید"
+            android:textColor="@color/on_primary"
+            android:textSize="24sp"
+            android:alpha="0.9"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="To download Instagram content, we need permission to access your device storage. Please click the button below to grant the necessary permissions."
+            android:textColor="@color/on_primary"
+            android:textSize="16sp"
+            android:alpha="0.8"
+            android:gravity="center"
+            android:fontFamily="sans-serif"
+            android:layout_marginBottom="40dp" />
+
+        <!-- Grant Permission Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGrantPermission"
+            android:layout_width="280dp"
+            android:layout_height="80dp"
+            android:text="Grant Permission"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/on_primary"
+            app:cornerRadius="24dp"
+            android:background="@drawable/button_ripple"
+            app:icon="@drawable/ic_download"
+            app:iconGravity="textStart"
+            app:iconSize="28dp"
+            app:iconTint="@color/on_primary"
+            android:fontFamily="sans-serif-medium" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

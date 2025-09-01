@@ -2,9 +2,10 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/animated_gradient_background"
     tools:context=".MainActivity">
 
     <!-- Main Content -->
@@ -52,7 +53,7 @@
 
                 </FrameLayout>
 
-                <!-- App Title -->
+                <!-- App Title - Bold Font -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,10 +61,10 @@
                     android:textColor="@color/on_primary"
                     android:textSize="36sp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="@font/iransansbold"
                     android:layout_marginBottom="8dp" />
 
-                <!-- App Subtitle -->
+                <!-- App Subtitle - Light Font -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,7 +72,7 @@
                     android:textColor="@color/on_primary"
                     android:textSize="16sp"
                     android:alpha="0.9"
-                    android:fontFamily="sans-serif-light" />
+                    android:fontFamily="@font/iransanslight" />
 
             </LinearLayout>
 
@@ -94,7 +95,7 @@
                     android:orientation="vertical"
                     android:padding="32dp">
 
-                    <!-- Input Section -->
+                    <!-- Input Section - Medium Font -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -103,7 +104,7 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="20dp"
-                        android:fontFamily="sans-serif-medium" />
+                        android:fontFamily="@font/iransansmedium" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/inputLayout"
@@ -129,18 +130,18 @@
                             android:inputType="textUri"
                             android:textSize="16sp"
                             android:textColor="@color/on_surface"
-                            android:fontFamily="sans-serif" />
+                            android:fontFamily="@font/iransans" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Download Button -->
+                    <!-- Download Button - Bold Font -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button"
                         android:layout_width="234dp"
                         android:layout_height="64dp"
                         android:layout_marginTop="32dp"
                         android:background="@drawable/button_ripple"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/iransansbold"
                         android:text="@string/download_button"
                         android:textColor="@color/on_primary"
                         android:textSize="18sp"
@@ -160,6 +161,7 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
+                        <!-- Progress Label - Medium Font -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -168,7 +170,7 @@
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="16dp"
-                            android:fontFamily="sans-serif-medium" />
+                            android:fontFamily="@font/iransansmedium" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -186,6 +188,7 @@
                                 android:layout_marginEnd="16dp"
                                 android:progressDrawable="@drawable/custom_progress_bar" />
 
+                            <!-- Progress Text - Bold Font -->
                             <TextView
                                 android:id="@+id/progressText"
                                 android:layout_width="wrap_content"
@@ -195,10 +198,11 @@
                                 android:textSize="16sp"
                                 android:textStyle="bold"
                                 android:minWidth="48dp"
-                                android:fontFamily="sans-serif-medium" />
+                                android:fontFamily="@font/iransansbold" />
 
                         </LinearLayout>
 
+                        <!-- Status Text - Regular Font -->
                         <TextView
                             android:id="@+id/StatusText"
                             android:layout_width="wrap_content"
@@ -207,15 +211,13 @@
                             android:textColor="@color/on_surface_variant"
                             android:textSize="14sp"
                             android:gravity="center"
-                            android:fontFamily="sans-serif" />
+                            android:fontFamily="@font/iransans" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
-
 
             <!-- Footer -->
             <LinearLayout
@@ -224,6 +226,7 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
+                <!-- Version Text - Medium Font -->
                 <TextView
                     android:id="@+id/version"
                     android:layout_width="wrap_content"
@@ -233,8 +236,9 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:alpha="0.8"
-                    android:fontFamily="sans-serif-medium" />
+                    android:fontFamily="@font/iransansmedium" />
 
+                <!-- Author Text - Light Font -->
                 <TextView
                     android:id="@+id/author"
                     android:layout_width="wrap_content"
@@ -244,7 +248,7 @@
                     android:textColor="@color/on_primary"
                     android:textSize="12sp"
                     android:alpha="0.7"
-                    android:fontFamily="sans-serif" />
+                    android:fontFamily="@font/iransanslight" />
 
             </LinearLayout>
 
