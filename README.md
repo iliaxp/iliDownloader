@@ -1,18 +1,33 @@
-## iliDownloader — Instagram Content Downloader for Android
+<div align="center">
 
-Beautiful, fast, and reliable Instagram downloader for Android. Built with clean architecture, Kotlin, Material 3, and a Python (Chaquopy) engine under the hood. Supports background downloads with a persistent notification, live in‑app progress, clipboard auto‑paste, and a smooth, modern UI.
+# 📥 iliDownloader
 
-### Why clients love it
-- **Background downloads that don’t stop**: Close the app and your downloads keep going via a Foreground Service with a rich notification.
-- **Real‑time progress, everywhere**: Progress appears both in the notification and inside the app UI.
-- **Zero‑tap convenience**: If the input is empty, the app auto‑pastes the latest link in your clipboard.
-- **Multiple downloads, stress‑free**: Queue as many as you want; the app handles them sequentially without crashing.
-- **Beautiful and accessible**: Material 3 styling, polished animations, light/dark assets, and clear feedback.
+Beautiful Instagram Content Downloader for Android
+
+[![Platform](https://img.shields.io/badge/platform-Android-brightgreen)](https://developer.android.com)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9%2B-7F52FF)](https://kotlinlang.org)
+[![Material](https://img.shields.io/badge/Material-3-6200EE)](https://m3.material.io/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
+</div>
+
+> Inspired by the clean presentation style of [`OnlineShop`](https://github.com/iliaxp/OnlineShop).
 
 ---
 
-### Preview
-> Replace the placeholders below with your own screenshots/GIFs from `app/release` or device captures.
+## ✨ Highlights
+
+- 🛡️ **Background downloads that don’t stop** — Foreground Service keeps downloads running even if the app closes.
+- 📊 **Live progress, everywhere** — Real‑time progress in notification and in‑app UI.
+- 📋 **Clipboard auto‑paste** — Empty field? We paste your latest link automatically.
+- 🧰 **Multiple downloads** — Queue any number without crashing or blocking.
+- 🎨 **Modern UI** — Material 3, smooth animations, and accessible design.
+
+---
+
+## 🖼️ Preview
+
+> Replace placeholders with your screenshots or GIFs.
 
 | Home | Progress | Notification |
 |---|---|---|
@@ -20,105 +35,152 @@ Beautiful, fast, and reliable Instagram downloader for Android. Built with clean
 
 ---
 
-## Features
-- **Download by username**: Grabs all public posts and saves them under `/sdcard/InstaLoaderApp/<username>`.
-- **Download by post link**: Supports both `https://www.instagram.com/p/...` and `https://www.instagram.com/reel/...` to `/sdcard/InstaLoaderApp/posts`.
-- **Foreground Service**: Reliable background execution with Android‑compliant notifications.
-- **Live in‑app progress**: Smooth progress bar and status messaging.
-- **Clipboard auto‑paste**: One‑tap flow—just copy a link and hit Download.
-- **Queueing**: Enqueue multiple downloads without blocking the UI.
-- **Language selection screen**: English and Persian supported.
+## 🧩 Features
 
-## Tech Stack
-- **Android**: Kotlin, Material 3, ViewBinding, Coroutines
-- **Architecture**: Clean code principles, single‑responsibility activities, foreground service for background work
-- **Python**: [Chaquopy](https://chaquo.com/chaquopy/) to run the `instaloader` library inside the app
-- **Libraries**: 
-  - `instaloader` (Python) for reliable Instagram media downloading
-
-## How it works (high level)
-1. The user enters a username or Instagram link. If empty, the app auto‑pastes from the clipboard.
-2. A Foreground Service (`DownloadService`) enqueues and performs downloads in the background.
-3. The service updates a persistent notification and broadcasts progress updates.
-4. `MainActivity` listens to progress broadcasts and updates the in‑app progress bar.
-5. The Python layer (`app/src/main/python/script.py`) uses `instaloader` to fetch media and report progress.
-
-## Permissions
-- Storage (MANAGE_EXTERNAL_STORAGE or WRITE/READ depending on API) — to save media to `/sdcard/InstaLoaderApp/`.
-- Foreground service — to keep downloads running in the background.
-- Notifications (Android 13+) — to display foreground service progress.
-
-The app guides the user through a friendly permission flow via `LanguageSelectionActivity` → `PermissionGrantActivity`.
-
-## Project Structure
-```
-app/
-  src/main/java/com/alphacorp/instaloader/
-    MainActivity.kt                # UI and in‑app progress
-    DownloadService.kt             # Foreground background downloads + notifications
-    LanguageSelectionActivity.kt   # Language bootstrap
-    PermissionGrantActivity.kt     # Storage + notification permission flow
-  src/main/python/
-    script.py                      # instaloader integration and progress API
-  src/main/res/                    # Material 3 UI, animations, drawables
-```
-
-## Build & Run
-### Prerequisites
-- Android Studio Iguana or newer
-- Android SDK 24+
-- Gradle (via wrapper)
-
-### Steps
-1. Clone the repository.
-2. Open the project in Android Studio.
-3. Let Gradle sync and download dependencies (Chaquopy and Python wheels are configured in Gradle).
-4. Connect a device (Android 8+) or start an emulator.
-5. Run the app.
-
-### Signing & Release
-- Generate a release keystore and configure signing in `app/build.gradle` or Android Studio’s Signing Configs.
-- Build a release APK/AAB via Build → Generate Signed Bundle/APK.
-
-## Usage
-1. Launch the app and choose your language.
-2. Grant the requested storage and notification permissions.
-3. Paste an Instagram username or post link, or just tap Download to auto‑paste from clipboard.
-4. Track progress in the app and in the notification.
-5. Queue additional downloads immediately—each new input is added to the background queue.
-
-## Roadmap
-- Settings screen (choose download folder, data saver mode)
-- Pause/Resume for the download queue
-- In‑app gallery with share/delete
-- More locales
-
-## Privacy & Legal
-- This app downloads only publicly available content. Respect creators’ rights.
-- Ensure you have permission to download and use content.
-- This project is not affiliated with Instagram.
-
-## Troubleshooting
-- “No posts found or account is private”: Only public profiles are supported.
-- Notification doesn’t appear (Android 13+): Enable app notifications in system settings.
-- Storage errors on Android 11+: Ensure you granted “All files access” when prompted.
-- Slow or stuck progress: Network conditions and Instagram rate limits can affect speed. The app shows smooth progress and completes as soon as the Python engine finishes.
-
-## Contributing
-Issues and pull requests are welcome. Please read `CONTRIBUTING.md` before submitting changes.
-
-## License
-Licensed under the terms of the `LICENSE` file in this repository.
+| Category | Details |
+|---|---|
+| Download by username | Saves public posts to `/sdcard/InstaLoaderApp/<username>` |
+| Download by link | Supports `…/p/…` and `…/reel/…` to `/sdcard/InstaLoaderApp/posts` |
+| Foreground Service | Reliable background execution with Android‑compliant notifications |
+| In‑app progress | Smooth progress bar and status updates |
+| Clipboard auto‑paste | One‑tap flow: copy a link, hit Download |
+| Queueing | Multiple downloads handled sequentially |
+| Localization | English and Persian language selection |
 
 ---
 
-### Pitch to Clients
-- **Conversion‑focused UX**: Minimal taps, clear feedback, delightful animations.
-- **Enterprise‑ready reliability**: Foreground service guarantees downloads continue even if the app is closed.
-- **Maintainable code**: Clean Kotlin, separation of concerns, and typed contracts.
-- **Extensible**: Add premium features (e.g., batch rules, filters, private API with auth) without changing the core flow.
+## 🛠️ Technology Stack
 
-Want a branded build, custom flows, or additional platforms? Let’s talk.
+| Layer | Tech |
+|---|---|
+| Language | Kotlin |
+| UI | Material 3, ViewBinding |
+| Concurrency | Coroutines |
+| Background | Foreground Service + Notifications |
+| Python Engine | [Chaquopy](https://chaquo.com/chaquopy/) |
+| Downloader | `instaloader` (Python) |
+
+---
+
+## 🧭 How It Works
+
+1. Input a username or Instagram link (or leave empty to auto‑paste from clipboard).
+2. `DownloadService` enqueues and performs background downloads as a Foreground Service.
+3. The service updates the persistent notification and broadcasts progress events.
+4. `MainActivity` listens for broadcasts and updates the in‑app progress UI.
+5. `script.py` (Python) uses `instaloader` to fetch media and report progress.
+
+---
+
+## 🔐 Permissions
+
+- Storage (MANAGE_EXTERNAL_STORAGE or WRITE/READ) — Save media to `/sdcard/InstaLoaderApp/`.
+- Foreground Service — Keep downloads running in background.
+- Notifications (Android 13+) — Show progress notifications.
+
+The app guides users via `LanguageSelectionActivity` → `PermissionGrantActivity`.
+
+---
+
+## 🗂️ Project Structure
+
+```
+app/
+  src/main/java/com/alphacorp/instaloader/
+    MainActivity.kt                # UI + in‑app progress
+    DownloadService.kt             # Foreground downloads + notifications
+    LanguageSelectionActivity.kt   # Language bootstrap
+    PermissionGrantActivity.kt     # Permission flow
+  src/main/python/
+    script.py                      # instaloader integration + progress API
+  src/main/res/                    # Material 3 UI, animations, drawables
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Android Studio Iguana or newer
+- Android SDK 24+
+- Gradle (wrapper included)
+
+### Installation
+
+```bash
+git clone https://github.com/your-org/iliDownloader.git
+cd iliDownloader
+```
+
+1) Open in Android Studio and wait for Gradle sync.
+2) Connect a device (Android 8+) or start an emulator.
+3) Run the app.
+
+### Signing & Release
+
+- Generate a release keystore and configure signing in Android Studio or `app/build.gradle`.
+- Build → Generate Signed Bundle/APK to produce AAB/APK.
+
+---
+
+## 📱 Usage
+
+1. Choose language on first launch.
+2. Grant storage and notification permissions.
+3. Paste a username or post link (or tap Download to auto‑paste from clipboard).
+4. Track progress both in‑app and in notification.
+5. Add more links immediately; they’ll queue in the background.
+
+---
+
+## 🗺️ Roadmap
+
+- Settings screen (destination folder, data saver)
+- Pause/Resume queue
+- In‑app gallery with share/delete
+- More locales
+
+---
+
+## 🔒 Privacy & Legal
+
+- Downloads only publicly available content. Respect creators’ rights.
+- Ensure you have permission to download and use content.
+- Not affiliated with Instagram.
+
+---
+
+## 🧰 Troubleshooting
+
+- “No posts found or account is private” → Only public profiles are supported.
+- No notification on Android 13+ → Enable app notifications in system settings.
+- Storage errors on Android 11+ → Grant “All files access” when prompted.
+- Slow/stuck progress → Network/rate limiting can affect speed; the UI remains responsive.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please see `CONTRIBUTING.md` and open an issue or PR.
+
+---
+
+## 📄 License
+
+MIT — see `LICENSE` for details.
+
+---
+
+## 💼 For Clients
+
+- Conversion‑focused UX with minimal taps and delightful feedback.
+- Enterprise‑grade reliability via Foreground Service.
+- Clean, maintainable Kotlin code and clear separation of concerns.
+- Extensible for premium features (batch rules, filters, private API with auth).
+
+Need branding, custom flows, or multi‑platform support? Let’s talk.
+
 
 # InstaLoader - Beautiful Instagram Content Downloader
 
