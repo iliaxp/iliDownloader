@@ -2,9 +2,6 @@ package com.alphacorp.instaloader
 
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.view.animation.Animation
-import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
 
 class AnimatedGradientDrawable : Drawable() {
     
