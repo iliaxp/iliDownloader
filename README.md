@@ -31,9 +31,10 @@ Beautiful Instagram Content Downloader for Android
 
 | Home | Progress | Notification |
 |---|---|---|
-| ![Home](./docs/images/home.png) | ![Progress](./docs/images/progress.png) | ![Notification](./docs/images/notification.png) |
+| ![Home](https://github.com/user-attachments/assets/56590952-4970-4cf8-be2f-4275c3b9a787) | ![Progress](https://github.com/user-attachments/assets/5eafe9cd-9784-4f16-9ae4-ef362673d951) | ![Notification](https://github.com/user-attachments/assets/175cc2cc-b7a4-4bc7-b6a0-17ebcc5c9bf8) |
 
 ---
+
 
 ## 🧩 Features
 
